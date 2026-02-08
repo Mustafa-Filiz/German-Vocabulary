@@ -1,10 +1,10 @@
 import PageHeader from "@/components/page-header";
-import React from "react";
+import AddNewWords from "./ui/add-new-words";
 
 function HomeContainer() {
   return (
     <>
-      <PageHeader title="Home" />
+      <PageHeader title="Home" actions={<AddNewWords />} />
     </>
   );
 }

@@ -11,17 +11,16 @@ const tabs = [
   { href: "/quiz", label: "Quiz", key: "quiz" },
 ];
 
-function Icon({ name, active }: { name: string; active: boolean }) {
-  const className = active ? "text-sky-500" : "";
+function Icon({ name }: { name: string }) {
   switch (name) {
     case "home":
-      return <House className={className} />;
+      return <House />;
     case "learn":
-      return <GraduationCap className={className} />;
+      return <GraduationCap />;
     case "practice":
-      return <Dumbbell className={className} />;
+      return <Dumbbell />;
     case "quiz":
-      return <FileQuestionMark className={className} />;
+      return <FileQuestionMark />;
     default:
       return null;
   }
@@ -33,7 +32,7 @@ export default function TabBar() {
   return (
     <nav
       aria-label="Primary"
-      className="fixed left-4 right-4 bottom-4 z-40 rounded-2xl bg-white/80 backdrop-blur-md shadow-md dark:bg-zinc-900/80 p-2 safe-bottom"
+      className="max-w-90 fixed left-4 right-4 bottom-4 z-40 rounded-2xl bg-white/80 backdrop-blur-md shadow-md dark:bg-zinc-900/80 p-2 m-auto safe-bottom"
       style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
     >
       <ul className="flex justify-between items-center">
@@ -44,10 +43,10 @@ export default function TabBar() {
             <li key={t.key} className="flex-1">
               <Link
                 href={t.href}
-                className={`flex flex-col items-center justify-center gap-1 py-2 px-3 rounded-lg ${active ? "text-sky-600" : "text-zinc-600"}`}
+                className={`flex flex-col items-center justify-center gap-1 py-2 px-3 rounded-lg ${active ? "text-sky-500" : "text-zinc-600"}`}
                 aria-current={active ? "page" : undefined}
               >
-                <Icon name={iconName} active={active} />
+                <Icon name={iconName} />
                 <span className="text-[11px] leading-none">{t.label}</span>
               </Link>
             </li>
