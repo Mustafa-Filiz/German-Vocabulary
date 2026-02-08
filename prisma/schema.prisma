@@ -75,3 +75,16 @@ model Verification {
   @@index([identifier])
   @@map("verification")
 }
+
+model Word {
+  id               String   @id @default(uuid())
+  term             String   @unique
+  definitionEng    String
+  definitionTr     String
+  example_sentence String
+  level            String
+  category         String
+  createdAt        DateTime @default(now())
+
+  @@map("word")
+}
