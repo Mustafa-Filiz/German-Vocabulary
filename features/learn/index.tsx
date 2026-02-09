@@ -2,6 +2,7 @@ import PageHeader from "@/components/page-header";
 import AddNewWords from "./ui/add-new-words";
 import { getCategories } from "./data/get-categories";
 import CategoryCard from "./ui/category-card";
+import Link from "next/link";
 
 async function LearnContainer() {
   const categories = await getCategories();
@@ -9,13 +10,17 @@ async function LearnContainer() {
   return (
     <div>
       <PageHeader title="Learn" actions={<AddNewWords />} />
-      <div className="mt-8 space-y-4">
+      <div className="flex flex-col gap-4 mt-8 ">
         {categories.map((category) => (
-          <CategoryCard
+          <Link
             key={category.categoryTitle}
-            category={category.categoryTitle}
-            wordCount={category.wordCount}
-          />
+            href={`/learn/${category.categoryTitle}`}
+          >
+            <CategoryCard
+              category={category.categoryTitle}
+              wordCount={category.wordCount}
+            />
+          </Link>
         ))}
       </div>
     </div>

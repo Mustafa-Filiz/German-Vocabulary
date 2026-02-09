@@ -1,6 +1,14 @@
 import { typedFetch } from "@/lib/typed-fetch";
-import { wordSchema } from "@/types";
+import { Category, wordSchema } from "@/types";
 
-export async function getWords() {
-  return await typedFetch("/api/get-words", wordSchema.array());
+export async function getWords(category: Category) {
+  const searchParams = new URLSearchParams();
+  if (category) {
+    searchParams.append("category", category);
+  }
+
+  return await typedFetch(
+    `/api/get-words?${searchParams.toString()}`,
+    wordSchema.array(),
+  );
 }

@@ -10,19 +10,19 @@ export const levelEnum = z.enum(["A1", "A2", "B1", "B2", "C1", "C2"]);
 export type Level = z.infer<typeof levelEnum>;
 
 export const categoryEnum = z.enum([
-  "PERSONAL_INFO",
-  "FAMILY",
-  "HOME",
-  "DAILY_ROUTINE",
-  "SHOPPING",
-  "FOOD_DRINK",
-  "HEALTH",
-  "TRANSPORT",
-  "WEATHER_NATURE",
-  "HOBBY_FREE_TIME",
-  "WORK_JOB",
-  "EDUCATION",
-  "TECHNOLOGY",
+  "personal_info",
+  "family",
+  "home",
+  "daily_routine",
+  "shopping",
+  "food_drink",
+  "health",
+  "transport",
+  "weather_nature",
+  "hobby_free_time",
+  "work_job",
+  "education",
+  "technology",
 ]);
 export type Category = z.infer<typeof categoryEnum>;
 
