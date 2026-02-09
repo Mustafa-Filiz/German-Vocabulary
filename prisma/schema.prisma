@@ -77,14 +77,55 @@ model Verification {
 }
 
 model Word {
-  id               String   @id @default(uuid())
-  term             String   @unique
-  definitionEng    String
-  definitionTr     String
-  example_sentence String
-  level            String
-  category         String
-  createdAt        DateTime @default(now())
+  id              String   @id @default(uuid())
+  term            String   @unique
+  article         Article?
+  pluralForm      String?
+  wordType        WordType
+  definitionEng   String
+  definitionTr    String
+  exampleSentence String
+  level           Level
+  category        Category
+  createdAt       DateTime @default(now())
 
   @@map("word")
+}
+
+enum WordType {
+  noun
+  verb
+  adjective
+  adverb
+}
+
+enum Level {
+  A1
+  A2
+  B1
+  B2
+  C1
+  C2
+}
+
+enum Article {
+  der
+  die
+  das
+}
+
+enum Category {
+  PERSONAL_INFO
+  FAMILY
+  HOME
+  DAILY_ROUTINE
+  SHOPPING
+  FOOD_DRINK
+  HEALTH
+  TRANSPORT
+  WEATHER_NATURE
+  HOBBY_FREE_TIME
+  WORK_JOB
+  EDUCATION
+  TECHNOLOGY
 }

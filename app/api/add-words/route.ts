@@ -17,6 +17,9 @@ export async function POST(request: NextRequest) {
     Each object in the array must adhere to this exact schema:
     {
     "term": "String (The German word or phrase)",
+    "article": "String (The correct article for the term, e.g., 'der', 'die', 'das' for nouns)",
+    "pluralForm": "String (The plural form of the term, if applicable)",
+    "wordType": "String (The type of the word, e.g., 'noun', 'verb', 'adjective', 'adverb')",
     "definitionTr": "String (Turkish definition)",
     "definitionEng": "String (English definition)",
     "exampleSentence": "String (A simple German sentence using the term suitable for the requested levels)",
@@ -41,9 +44,12 @@ export async function POST(request: NextRequest) {
       await prisma.word.create({
         data: {
           term: word.term,
+          article: word.article,
+          pluralForm: word.pluralForm,
+          wordType: word.wordType,
           definitionTr: word.definitionTr,
           definitionEng: word.definitionEng,
-          example_sentence: word.exampleSentence,
+          exampleSentence: word.exampleSentence,
           category: word.category,
           level: word.level,
         },

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -47,8 +48,7 @@ import {
   ComboboxValue,
   useComboboxAnchor,
 } from "@/components/ui/combobox";
-import { addWords } from "../data/addWords";
-import { useActionState } from "react";
+import { addWords } from "../data/add-words";
 
 const formSchema = z.object({
   amount: z
@@ -57,7 +57,12 @@ const formSchema = z.object({
     .max(100, "Word amount must be at most 100."),
   levels: z.array(z.string()).min(1, "Please select at least one level."),
   categories: z
-    .array(z.string())
+    .array(
+      z.object({
+        value: z.string(),
+        label: z.string(),
+      }),
+    )
     .min(1, "Please select at least one category."),
 });
 
@@ -76,7 +81,10 @@ function AddNewWords() {
   const anchor = useComboboxAnchor();
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
-    await addWords(data.amount, data.levels, data.categories);
+    const selectedCategories = data.categories.map(
+      (category) => category.value,
+    );
+    await addWords(data.amount, data.levels, selectedCategories);
     form.reset();
   }
 
@@ -199,7 +207,10 @@ function AddNewWords() {
                     autoHighlight
                     items={GERMAN_VOCAB_CATEGORIES}
                     defaultValue={[GERMAN_VOCAB_CATEGORIES[0]]}
-                    onValueChange={field.onChange}
+                    onValueChange={(val) => {
+                      console.log("🚀 ~ AddNewWords ~ val:", val);
+                      field.onChange(val);
+                    }}
                   >
                     <FieldLabel>Categories</FieldLabel>
                     <FieldDescription>
@@ -208,14 +219,19 @@ function AddNewWords() {
 
                     <ComboboxChips ref={anchor} className="w-full max-w-xs">
                       <ComboboxValue>
-                        {(values) => (
-                          <React.Fragment>
-                            {values.map((value: string) => (
-                              <ComboboxChip key={value}>{value}</ComboboxChip>
-                            ))}
-                            <ComboboxChipsInput />
-                          </React.Fragment>
-                        )}
+                        {(values) => {
+                          console.log("🚀 ~ AddNewWords ~ values:", values);
+                          return (
+                            <React.Fragment>
+                              {values.map((value: any) => (
+                                <ComboboxChip key={value.value}>
+                                  {value.label}
+                                </ComboboxChip>
+                              ))}
+                              <ComboboxChipsInput />
+                            </React.Fragment>
+                          );
+                        }}
                       </ComboboxValue>
                     </ComboboxChips>
                     <ComboboxContent anchor={anchor}>
@@ -223,11 +239,11 @@ function AddNewWords() {
                       <ComboboxList>
                         {(item) => (
                           <ComboboxItem
-                            key={item}
+                            key={item.value}
                             value={item}
                             className="pointer-events-auto cursor-pointer"
                           >
-                            {item}
+                            {item.label}
                           </ComboboxItem>
                         )}
                       </ComboboxList>

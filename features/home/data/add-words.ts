@@ -1,4 +1,4 @@
-import { typedFetch } from "@/lib/typedFetch";
+import { typedFetch } from "@/lib/typed-fetch";
 import { wordSchema } from "@/types";
 
 export async function addWords(
