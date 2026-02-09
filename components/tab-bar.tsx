@@ -1,11 +1,10 @@
 "use client";
 
-import { Dumbbell, FileQuestionMark, GraduationCap, House } from "lucide-react";
+import { Dumbbell, FileQuestionMark, GraduationCap } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const tabs = [
-  { href: "/home", label: "Home", key: "home" },
   { href: "/learn", label: "Learn", key: "learn" },
   { href: "/practice", label: "Practice", key: "practice" },
   { href: "/quiz", label: "Quiz", key: "quiz" },
@@ -13,8 +12,6 @@ const tabs = [
 
 function Icon({ name }: { name: string }) {
   switch (name) {
-    case "home":
-      return <House />;
     case "learn":
       return <GraduationCap />;
     case "practice":

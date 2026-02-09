@@ -31,11 +31,7 @@ import {
 } from "@/components/ui/sheet";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import {
-  AMOUNTS_OF_WORDS_TO_ADD,
-  GERMAN_VOCAB_CATEGORIES,
-  LEVELS,
-} from "../constants";
+import { AMOUNTS_OF_WORDS_TO_ADD } from "../constants";
 import {
   Combobox,
   ComboboxChip,
@@ -49,6 +45,11 @@ import {
   useComboboxAnchor,
 } from "@/components/ui/combobox";
 import { addWords } from "../data/add-words";
+import {
+  GERMAN_VOCAB_CATEGORIES,
+  GERMAN_VOCAB_CATEGORIES_ARRAY,
+  LEVELS,
+} from "@/constants";
 
 const formSchema = z.object({
   amount: z
@@ -69,7 +70,7 @@ const formSchema = z.object({
 const defaultValues = {
   amount: AMOUNTS_OF_WORDS_TO_ADD[0],
   levels: [LEVELS[0]],
-  categories: [GERMAN_VOCAB_CATEGORIES[0]],
+  categories: [GERMAN_VOCAB_CATEGORIES_ARRAY[0]],
 };
 
 function AddNewWords() {
@@ -205,12 +206,9 @@ function AddNewWords() {
                   <Combobox
                     multiple
                     autoHighlight
-                    items={GERMAN_VOCAB_CATEGORIES}
-                    defaultValue={[GERMAN_VOCAB_CATEGORIES[0]]}
-                    onValueChange={(val) => {
-                      console.log("🚀 ~ AddNewWords ~ val:", val);
-                      field.onChange(val);
-                    }}
+                    items={GERMAN_VOCAB_CATEGORIES_ARRAY}
+                    defaultValue={field.value}
+                    onValueChange={field.onChange}
                   >
                     <FieldLabel>Categories</FieldLabel>
                     <FieldDescription>
@@ -219,19 +217,16 @@ function AddNewWords() {
 
                     <ComboboxChips ref={anchor} className="w-full max-w-xs">
                       <ComboboxValue>
-                        {(values) => {
-                          console.log("🚀 ~ AddNewWords ~ values:", values);
-                          return (
-                            <React.Fragment>
-                              {values.map((value: any) => (
-                                <ComboboxChip key={value.value}>
-                                  {value.label}
-                                </ComboboxChip>
-                              ))}
-                              <ComboboxChipsInput />
-                            </React.Fragment>
-                          );
-                        }}
+                        {(values) => (
+                          <React.Fragment>
+                            {values.map((value: any) => (
+                              <ComboboxChip key={value.value}>
+                                {value.label}
+                              </ComboboxChip>
+                            ))}
+                            <ComboboxChipsInput />
+                          </React.Fragment>
+                        )}
                       </ComboboxValue>
                     </ComboboxChips>
                     <ComboboxContent anchor={anchor}>
