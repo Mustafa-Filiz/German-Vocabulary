@@ -75,3 +75,57 @@ model Verification {
   @@index([identifier])
   @@map("verification")
 }
+
+model Word {
+  id              String   @id @default(uuid())
+  term            String   @unique
+  article         Article?
+  pluralForm      String?
+  wordType        WordType
+  definitionEng   String
+  definitionTr    String
+  exampleSentence String
+  level           Level
+  category        Category
+  createdAt       DateTime @default(now())
+
+  @@map("word")
+}
+
+enum WordType {
+  noun
+  verb
+  adjective
+  adverb
+}
+
+enum Level {
+  A1
+  A2
+  B1
+  B2
+  C1
+  C2
+}
+
+enum Article {
+  der
+  die
+  das
+}
+
+enum Category {
+  personal_info
+  family
+  home
+  daily_routine
+  shopping
+  food_drink
+  health
+  transport
+  weather_nature
+  hobby_free_time
+  work_job
+  education
+  technology
+}

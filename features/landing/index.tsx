@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { BookOpen, Zap, Target, TrendingUp } from "lucide-react";
 import LandingHeader from "./ui/landing-header";
+import Link from "next/link";
 
 function LandingContainer() {
   return (
@@ -22,8 +23,12 @@ function LandingContainer() {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-            <Button size="lg" className="text-base max-w-xs sm:max-w-none">
-              Start Learning Free
+            <Button
+              size="lg"
+              className="text-base max-w-xs sm:max-w-none"
+              asChild
+            >
+              <Link href="/home">Start Learning Free</Link>
             </Button>
             <Button
               size="lg"
