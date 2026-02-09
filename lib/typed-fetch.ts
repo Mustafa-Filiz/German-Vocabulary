@@ -1,13 +1,13 @@
 import { z } from "zod";
 
-// const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
 export async function typedFetch<T>(
   url: string,
   schema: z.ZodType<T>,
   options?: RequestInit,
 ): Promise<T> {
-  const res = await fetch(`${url}`, options);
+  const res = await fetch(`${BASE_URL}${url}`, options);
 
   if (!res.ok) {
     throw new Error(`HTTP error ${res.status}`);
