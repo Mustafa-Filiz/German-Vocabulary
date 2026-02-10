@@ -28,7 +28,7 @@ function LandingContainer() {
               className="text-base max-w-xs sm:max-w-none"
               asChild
             >
-              <Link href="/home">Start Learning Free</Link>
+              <Link href="/learn">Start Learning Free</Link>
             </Button>
             <Button
               size="lg"
