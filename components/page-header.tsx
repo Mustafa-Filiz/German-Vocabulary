@@ -21,9 +21,11 @@ export default function PageHeader({
 }: PageHeaderProps) {
   return (
     <header
-      className={`flex items-start ${center ? "flex-col text-center" : "justify-between"} gap-3 mb-6`}
+      className={`sticky top-0 z-50 bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60 border-b border-border flex items-center justify-between gap-3 mb-6 px-4`}
     >
-      <div className={`flex items-center gap-3 ${center ? "flex-col" : ""}`}>
+      <div
+        className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex gap-3 ${center ? "flex-col" : ""}`}
+      >
         {backHref && (
           <Link
             href={backHref}

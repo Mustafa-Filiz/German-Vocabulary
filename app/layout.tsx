@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Raleway } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const raleway = Raleway({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -26,15 +27,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={raleway.variable}>
+    <html lang="en" className={raleway.variable} suppressHydrationWarning>
       <head>
         <meta name="apple-mobile-web-app-title" content="Wortschatzii" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased max-w-100 m-auto `}
       >
-        {children}
-        <Toaster />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );

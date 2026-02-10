@@ -19,7 +19,7 @@ function WordCard({ word }: Props) {
   const titleClass = word.article ? ARTICLE_COLORS[word.article] : "";
 
   return (
-    <Card className="w-full">
+    <Card className="w-full ">
       <CardHeader>
         <div className="flex items-center gap-4">
           <div className="flex-1">

@@ -22,10 +22,10 @@ function LandingContainer() {
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
             <Button
               size="lg"
-              className="text-base max-w-xs sm:max-w-none"
+              className="text-base max-w-xs sm:max-w-none w-full"
               asChild
             >
               <Link href="/learn">Start Learning Free</Link>
@@ -33,7 +33,7 @@ function LandingContainer() {
             <Button
               size="lg"
               variant="outline"
-              className="text-base max-w-xs sm:max-w-none"
+              className="text-base max-w-xs sm:max-w-none w-full"
             >
               Learn More
             </Button>

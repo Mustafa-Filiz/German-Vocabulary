@@ -10,7 +10,7 @@ async function LearnContainer() {
   return (
     <div>
       <PageHeader title="Learn" actions={<AddNewWords />} />
-      <div className="flex flex-col gap-4 mt-8 ">
+      <div className="flex flex-col gap-4 p-4">
         {categories.map((category) => (
           <Link
             key={category.categoryTitle}
