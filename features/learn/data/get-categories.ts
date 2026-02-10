@@ -1,18 +1,26 @@
-import { typedFetch } from "@/lib/typed-fetch";
-import { categoryEnum } from "@/types";
-import z from "zod";
-
-const categoriesResponseSchema = z.array(
-  z.object({
-    categoryTitle: categoryEnum,
-    wordCount: z.number(),
-  }),
-);
+import prisma from "@/lib/prisma";
 
 export async function getCategories() {
-  const response = await typedFetch(
-    "/api/categories",
-    categoriesResponseSchema,
-  );
+  const response = [];
+  const categories = await prisma.word.groupBy({
+    by: ["category"],
+    _count: { id: true },
+    where: {
+      category: { not: undefined },
+    },
+    orderBy: {
+      category: "asc",
+    },
+  });
+
+  for (const cat of categories) {
+    if (cat.category) {
+      response.push({
+        categoryTitle: cat.category,
+        wordCount: cat._count.id,
+      });
+    }
+  }
+
   return response;
 }

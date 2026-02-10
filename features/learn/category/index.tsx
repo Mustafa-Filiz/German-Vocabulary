@@ -1,7 +1,7 @@
 import { Category } from "@/types";
-import { getWords } from "../data/get-words";
 import PageHeader from "@/components/page-header";
 import { GERMAN_VOCAB_CATEGORIES } from "@/constants";
+import { getWords } from "../data/get-words";
 import WordCard from "../ui/word-card";
 
 async function LearnCategoryContainer({ category }: { category: Category }) {
