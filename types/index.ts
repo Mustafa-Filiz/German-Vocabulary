@@ -29,15 +29,15 @@ export type Category = z.infer<typeof categoryEnum>;
 export const wordSchema = z.object({
   id: z.string(),
   term: z.string(),
-  article: articleEnum.optional(),
-  pluralForm: z.string().optional(),
+  article: articleEnum.nullable(),
+  pluralForm: z.string().nullable(),
   wordType: wordTypeEnum,
   definitionEng: z.string(),
   definitionTr: z.string(),
   exampleSentence: z.string(),
   level: levelEnum,
   category: categoryEnum,
-  createdAt: z.string(),
+  createdAt: z.date(),
 });
 
 export type Word = z.infer<typeof wordSchema>;

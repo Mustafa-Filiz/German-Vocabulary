@@ -1,14 +1,20 @@
-import { typedFetch } from "@/lib/typed-fetch";
-import { Category, wordSchema } from "@/types";
+import prisma from "@/lib/prisma";
+import { Category } from "@/types";
 
 export async function getWords(category: Category) {
-  const searchParams = new URLSearchParams();
+  let queryOptions = {};
+
   if (category) {
-    searchParams.append("category", category);
+    queryOptions = {
+      where: {
+        category: category,
+      },
+    };
   }
 
-  return await typedFetch(
-    `/api/get-words?${searchParams.toString()}`,
-    wordSchema.array(),
-  );
+  const words = await prisma.word.findMany({
+    ...queryOptions,
+  });
+
+  return words;
 }
