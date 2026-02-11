@@ -20,7 +20,7 @@ export default function FlipCard({ frontContent, backContent }: FlipCardProps) {
   }
 
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className="flex items-center justify-center">
       <div className="h-64 w-96 cursor-pointer" onClick={handleFlip}>
         <motion.div
           className="h-full w-full rounded-xl shadow-xl"
