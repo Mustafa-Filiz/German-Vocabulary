@@ -26,7 +26,7 @@ export default function FlipCard({ frontContent, backContent }: FlipCardProps) {
           className="h-full w-full rounded-xl shadow-xl"
           initial={false}
           animate={{ rotateY: isFlipped ? 180 : 0 }}
-          transition={{ duration: 0.6, animationDirection: "normal" }}
+          transition={{ duration: 0.6, ease: "easeInOut" }}
           onAnimationComplete={() => setIsAnimating(false)}
           style={{ transformStyle: "preserve-3d" }}
         >
