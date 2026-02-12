@@ -9,9 +9,9 @@ interface Props {
 
 export default function ProtectedLayout({ children }: Props) {
   return (
-    <div className="min-h-screen pb-24" data-vaul-drawer-wrapper="">
-      <main className="p-4">{children}</main>
+    <main className="min-h-screen flex flex-col pb-24">
+      {children}
       <TabBar />
-    </div>
+    </main>
   );
 }

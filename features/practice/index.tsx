@@ -1,10 +1,16 @@
 import PageHeader from "@/components/page-header";
+import { getRandomWords } from "./data/get-random-words";
+import PracticeCarousel from "./ui/practice-carousel";
 
-function PracticeContainer() {
+async function PracticeContainer() {
+  const practiceWords = await getRandomWords();
   return (
-    <div>
+    <>
       <PageHeader title="Practice" />
-    </div>
+      <div className="flex-1 flex items-center p-4">
+        <PracticeCarousel words={practiceWords} />
+      </div>
+    </>
   );
 }
 
