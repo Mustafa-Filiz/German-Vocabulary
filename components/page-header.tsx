@@ -1,12 +1,9 @@
-"use client";
-
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { ReactNode } from "react";
 
 interface PageHeaderProps {
   title: string;
-  subtitle?: string;
   backHref?: string;
   actions?: ReactNode;
   center?: boolean;
@@ -14,23 +11,22 @@ interface PageHeaderProps {
 
 export default function PageHeader({
   title,
-  subtitle,
   backHref,
   actions,
   center = false,
 }: PageHeaderProps) {
   return (
     <header
-      className={`sticky top-0 z-50 bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60 border-b border-border flex items-center justify-between gap-3 mb-6 px-4`}
+      className={`sticky top-0 z-50 bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60 border-b border-border flex items-center justify-between gap-3 mb-2 px-4`}
     >
       <div
-        className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex gap-3 ${center ? "flex-col" : ""}`}
+        className={`py-4 flex items-center gap-3 ${center ? "flex-col" : ""}`}
       >
         {backHref && (
           <Link
             href={backHref}
             aria-label="Go back"
-            className="-ml-2 inline-flex h-9 w-9 items-center justify-center rounded-lg text-zinc-700 hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-800"
+            className="-ml-2 inline-flex items-center justify-center rounded-lg text-zinc-700 hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-800"
           >
             <ArrowLeft />
           </Link>
@@ -40,11 +36,6 @@ export default function PageHeader({
           <h1 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
             {title}
           </h1>
-          {subtitle && (
-            <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
-              {subtitle}
-            </p>
-          )}
         </div>
       </div>
 

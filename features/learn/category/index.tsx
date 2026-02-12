@@ -2,24 +2,21 @@ import { Category } from "@/types";
 import PageHeader from "@/components/page-header";
 import { GERMAN_VOCAB_CATEGORIES } from "@/constants";
 import { getWords } from "../data/get-words";
-import WordCard from "../ui/word-card";
+import LearnCarousel from "../ui/learn-carousel";
 
 async function LearnCategoryContainer({ category }: { category: Category }) {
   const words = await getWords(category);
 
   return (
-    <div>
+    <>
       <PageHeader
         title={`Category: ${GERMAN_VOCAB_CATEGORIES[category]}`}
-        subtitle={`You have ${words.length} ${words.length === 1 ? "word" : "words"} in this category.`}
         backHref="/learn"
       />
-      <div className="flex flex-col gap-4">
-        {words.map((word) => (
-          <WordCard key={word.id} word={word} />
-        ))}
+      <div className="flex-1 flex items-center p-4">
+        <LearnCarousel words={words} />
       </div>
-    </div>
+    </>
   );
 }
 

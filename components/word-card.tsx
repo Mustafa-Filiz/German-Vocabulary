@@ -5,11 +5,10 @@ import {
   CardDescription,
   CardAction,
   CardContent,
-  CardFooter,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Word } from "@/types";
-import { ARTICLE_COLORS, GERMAN_VOCAB_CATEGORIES } from "@/constants";
+import { ARTICLE_COLORS } from "@/constants";
 
 type Props = {
   word: Word;
@@ -23,7 +22,7 @@ function WordCard({ word }: Props) {
       <CardHeader>
         <div className="flex items-center gap-4">
           <div className="flex-1">
-            <CardTitle className={titleClass}>
+            <CardTitle className={`${titleClass} text-2xl font-bold`}>
               {word.article ? `${word.article} ${word.term}` : word.term}
             </CardTitle>
             {word.pluralForm ? (
@@ -47,11 +46,11 @@ function WordCard({ word }: Props) {
           <blockquote className="mt-3 text-sm italic text-muted-foreground">{`"${word.exampleSentence}"`}</blockquote>
         ) : null}
       </CardContent>
-      <CardFooter className="justify-between">
+      {/* <CardFooter className="justify-between">
         <span className="text-sm text-muted-foreground">
           {GERMAN_VOCAB_CATEGORIES[word.category]}
         </span>
-      </CardFooter>
+      </CardFooter> */}
     </Card>
   );
 }

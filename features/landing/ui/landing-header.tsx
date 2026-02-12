@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { BookOpen } from "lucide-react";
+import Link from "next/link";
 
 function LandingHeader() {
   return (
@@ -12,8 +13,9 @@ function LandingHeader() {
           </div>
 
           <div className="w-full flex gap-4 justify-end">
-            <Button variant="outline">Register</Button>
-            <Button>Login</Button>
+            <Button asChild variant="outline">
+              <Link href="/login">Login</Link>
+            </Button>
           </div>
         </div>
       </div>

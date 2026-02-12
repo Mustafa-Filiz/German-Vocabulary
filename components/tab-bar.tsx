@@ -1,6 +1,11 @@
 "use client";
 
-import { Dumbbell, FileQuestionMark, GraduationCap } from "lucide-react";
+import {
+  Dumbbell,
+  FileQuestionMark,
+  GraduationCap,
+  UserRoundCog,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -8,6 +13,7 @@ const tabs = [
   { href: "/learn", label: "Learn", key: "learn" },
   { href: "/practice", label: "Practice", key: "practice" },
   { href: "/quiz", label: "Quiz", key: "quiz" },
+  { href: "/profile", label: "Profile", key: "profile" },
 ];
 
 function Icon({ name }: { name: string }) {
@@ -18,6 +24,8 @@ function Icon({ name }: { name: string }) {
       return <Dumbbell />;
     case "quiz":
       return <FileQuestionMark />;
+    case "profile":
+      return <UserRoundCog />;
     default:
       return null;
   }
