@@ -4,6 +4,7 @@ import { CardCarousel } from "@/components/card-carousel";
 import FlipCard from "@/components/ui/flip-card";
 import { ARTICLE_COLORS } from "@/constants";
 import { Article, Word } from "@/types";
+import { revalidateRandomWords } from "../data/revalidate-random-words";
 
 interface PracticeCarouselProps {
   words: Word[];
@@ -60,6 +61,7 @@ function PracticeCarousel({ words }: PracticeCarouselProps) {
           }
         />
       )}
+      onComplete={revalidateRandomWords}
     />
   );
 }

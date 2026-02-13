@@ -8,17 +8,23 @@ import {
 } from "@/components/ui/carousel";
 import { Word } from "@/types";
 import { useEffect, useState } from "react";
+import { Button } from "./ui/button";
 
 interface CardCarouselProps {
   words: Word[];
   cardItem: (word: Word) => React.ReactNode;
+  onComplete?: () => void;
 }
 
-export function CardCarousel({ words, cardItem }: CardCarouselProps) {
+export function CardCarousel({
+  words,
+  cardItem,
+  onComplete,
+}: CardCarouselProps) {
   const [api, setApi] = useState<CarouselApi>();
 
   const [current, setCurrent] = useState(0);
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(1);
 
   useEffect(() => {
     if (!api) return;
@@ -37,6 +43,11 @@ export function CardCarousel({ words, cardItem }: CardCarouselProps) {
     };
   }, [api]);
 
+  function handleComplete() {
+    onComplete?.();
+    api?.scrollTo(0);
+  }
+
   return (
     <div className="w-full">
       <Carousel setApi={setApi} className="w-full">
@@ -51,6 +62,11 @@ export function CardCarousel({ words, cardItem }: CardCarouselProps) {
           {current} / {count}
         </span>
       </div>
+      {current === count && (
+        <Button className="mt-4 w-full" onClick={handleComplete}>
+          Next Practice Session
+        </Button>
+      )}
     </div>
   );
 }
