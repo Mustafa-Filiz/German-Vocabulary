@@ -37,28 +37,26 @@ export async function POST(request: NextRequest) {
   }
 
   const words: Word[] = JSON.parse(geminiResponse);
-  const response: Word[] = [];
+  let createdWords: Word[] = [];
 
-  for (const word of words) {
-    try {
-      await prisma.word.create({
-        data: {
-          term: word.term,
-          article: word.article,
-          pluralForm: word.pluralForm,
-          wordType: word.wordType,
-          definitionTr: word.definitionTr,
-          definitionEng: word.definitionEng,
-          exampleSentence: word.exampleSentence,
-          category: word.category,
-          level: word.level,
-        },
-      });
-      response.push(word);
-    } catch (error) {
-      console.error("Error saving word to database:", error);
-    }
+  try {
+    createdWords = await prisma.word.createManyAndReturn({
+      data: words.map((word) => ({
+        term: word.term,
+        article: word.article,
+        pluralForm: word.pluralForm,
+        wordType: word.wordType,
+        definitionTr: word.definitionTr,
+        definitionEng: word.definitionEng,
+        exampleSentence: word.exampleSentence,
+        category: word.category,
+        level: word.level,
+      })),
+      skipDuplicates: true, // This will skip any words that already exist in the database
+    });
+  } catch (error) {
+    console.error("Error creating words:", error);
   }
 
-  return NextResponse.json(response);
+  return NextResponse.json(createdWords);
 }
