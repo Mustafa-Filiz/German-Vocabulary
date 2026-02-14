@@ -1,5 +1,3 @@
-"use client";
-
 import TabBar from "@/components/tab-bar";
 import { ReactNode } from "react";
 
