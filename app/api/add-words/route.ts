@@ -1,6 +1,7 @@
 import { askGemini } from "@/lib/gemini";
 import prisma from "@/lib/prisma";
 import { Word } from "@/types";
+import { validateArticle } from "@/utils/validate-article";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
@@ -14,10 +15,15 @@ export async function POST(request: NextRequest) {
 
     You must output the response strictly as a raw JSON array of objects. Do not include markdown formatting, introduction text, or explanations.
 
+    IMPORTANT: Do NOT generate only nouns. You MUST include verbs, adjectives, and adverbs in the output. 
+    Generate diverse word types for a complete vocabulary learning experience.
+
+    IMPORTANT: Generate diverse categories for a complete vocabulary learning experience.
+
     Each object in the array must adhere to this exact schema:
     {
-    "term": "String (The German word or phrase)",
-    "article": "String (The correct article for the term, e.g., 'der', 'die', 'das' for nouns)",
+    "term": "String (The German word or phrase without the article)",
+    "article": "String (ONLY for nouns: exactly 'der', 'die', or 'das' in lowercase. For all other word types, use empty string '')",
     "pluralForm": "String (The plural form of the term, if applicable)",
     "wordType": "String (The type of the word, e.g., 'noun', 'verb', 'adjective', 'adverb')",
     "definitionTr": "String (Turkish definition)",
@@ -37,14 +43,15 @@ export async function POST(request: NextRequest) {
   }
 
   const words: Word[] = JSON.parse(geminiResponse);
+  console.log("🚀 ~ POST ~ words:", words);
   let createdWords: Word[] = [];
 
   try {
     createdWords = await prisma.word.createManyAndReturn({
       data: words.map((word) => ({
         term: word.term,
-        article: word.article,
-        pluralForm: word.pluralForm,
+        article: validateArticle(word.article),
+        pluralForm: word.pluralForm?.trim() || null,
         wordType: word.wordType,
         definitionTr: word.definitionTr,
         definitionEng: word.definitionEng,

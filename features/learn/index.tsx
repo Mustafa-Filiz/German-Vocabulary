@@ -9,7 +9,14 @@ async function LearnContainer() {
 
   return (
     <div>
-      <PageHeader title="Learn" actions={<AddNewWords />} />
+      <PageHeader
+        title="Learn"
+        actions={
+          <Suspense fallback={<div>Loading...</div>}>
+            <AddNewWords />
+          </Suspense>
+        }
+      />
       <div className="p-4">
         <Tabs defaultValue="categories" className="gap-4">
           <TabsList className="w-full">
@@ -59,6 +66,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Suspense } from "react";
 
 export function TabsDemo() {
   return (

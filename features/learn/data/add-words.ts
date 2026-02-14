@@ -1,5 +1,6 @@
 import { typedFetch } from "@/lib/typed-fetch";
 import { wordSchema } from "@/types";
+import { revalidateCache } from "@/utils/revalidate-cache";
 
 export async function addWords(
   amount: number,
@@ -13,6 +14,8 @@ export async function addWords(
     },
     body: JSON.stringify({ amount, levels, categories }),
   });
+
+  revalidateCache("/learn");
 
   return response;
 }
