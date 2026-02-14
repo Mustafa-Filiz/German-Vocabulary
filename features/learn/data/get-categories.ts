@@ -1,6 +1,10 @@
 import prisma from "@/lib/prisma";
+import { cacheTag } from "next/cache";
 
 export async function getCategories() {
+  "use cache";
+  cacheTag("categories");
+
   const response = [];
   const categories = await prisma.word.groupBy({
     by: ["category"],
