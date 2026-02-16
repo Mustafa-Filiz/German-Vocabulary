@@ -6,6 +6,7 @@ import Link from "next/link";
 
 async function LearnContainer() {
   const categories = await getCategories();
+  const levels = await getLevels();
 
   return (
     <div>
@@ -27,28 +28,21 @@ async function LearnContainer() {
             {categories.map((category) => (
               <Link
                 key={category.categoryTitle}
-                href={`/learn/${category.categoryTitle}`}
+                href={`/learn/category/${category.categoryTitle}`}
               >
                 <CategoryCard
-                  category={category.categoryTitle}
+                  title={GERMAN_VOCAB_CATEGORIES[category.categoryTitle]}
                   wordCount={category.wordCount}
                 />
               </Link>
             ))}
           </TabsContent>
           <TabsContent value="levels" className="flex flex-col gap-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>Analytics</CardTitle>
-                <CardDescription>
-                  Track performance and user engagement metrics. Monitor trends
-                  and identify growth opportunities.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="text-muted-foreground text-sm">
-                Page views are up 25% compared to last month.
-              </CardContent>
-            </Card>
+            {levels.map((level) => (
+              <Link key={level.level} href={`/learn/level/${level.level}`}>
+                <CategoryCard title={level.level} wordCount={level.wordCount} />
+              </Link>
+            ))}
           </TabsContent>
         </Tabs>
       </div>
@@ -67,6 +61,8 @@ import {
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Suspense } from "react";
+import { getLevels } from "./data/get-levels";
+import { GERMAN_VOCAB_CATEGORIES } from "@/constants";
 
 export function TabsDemo() {
   return (

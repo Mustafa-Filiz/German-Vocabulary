@@ -1,20 +1,16 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import type { Category } from "@/types";
-import { GERMAN_VOCAB_CATEGORIES } from "@/constants";
 
 type Props = {
-  category: Category;
+  title: string;
   wordCount: number;
 };
 
-function CategoryCard({ category, wordCount }: Props) {
-  const categoryLabel = GERMAN_VOCAB_CATEGORIES[category] || category;
-
+function CategoryCard({ title, wordCount }: Props) {
   return (
     <Card className="w-full hover:shadow-md transition-shadow">
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
-          <span>{categoryLabel}</span>
+          <span>{title}</span>
         </CardTitle>
       </CardHeader>
       <CardContent>

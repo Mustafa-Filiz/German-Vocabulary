@@ -4,10 +4,10 @@ import { Category } from "@/types";
 async function LearnCategoryPage({
   params,
 }: {
-  params: Promise<{ category: Category }>;
+  params: Promise<{ categoryName: Category }>;
 }) {
-  const { category } = await params;
-  return <LearnCategoryContainer category={category} />;
+  const { categoryName } = await params;
+  return <LearnCategoryContainer category={categoryName} />;
 }
 
 export default LearnCategoryPage;
