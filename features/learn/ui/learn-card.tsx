@@ -1,11 +1,11 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
-type Props = {
+interface LearnCardProps {
   title: string;
-  wordCount: number;
-};
+  description: string;
+}
 
-function CategoryCard({ title, wordCount }: Props) {
+function LearnCard({ title, description }: LearnCardProps) {
   return (
     <Card className="w-full hover:shadow-md transition-shadow">
       <CardHeader>
@@ -14,12 +14,10 @@ function CategoryCard({ title, wordCount }: Props) {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-sm text-muted-foreground">
-          {wordCount} {wordCount === 1 ? "word" : "words"} in this category
-        </p>
+        <p className="text-sm text-muted-foreground">{description}</p>
       </CardContent>
     </Card>
   );
 }
 
-export default CategoryCard;
+export default LearnCard;

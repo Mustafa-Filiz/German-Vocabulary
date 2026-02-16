@@ -30,9 +30,8 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { AMOUNTS_OF_WORDS_TO_ADD } from "../constants";
-import { addWords } from "../data/add-words";
+import { useAddWords } from "../data/add-words";
 import { GERMAN_VOCAB_CATEGORIES_ARRAY, LEVELS } from "@/constants";
-import { useState } from "react";
 import { Spinner } from "@/components/ui/spinner";
 
 const formSchema = z.object({
@@ -63,22 +62,19 @@ function AddNewWords() {
     defaultValues,
   });
 
-  const [isPending, setIsPending] = useState(false);
+  const { mutateAsync, isPending } = useAddWords();
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
     const selectedCategories = data.categories.map(
       (category) => category.value,
     );
 
-    try {
-      setIsPending(true);
-      await addWords(data.amount, data.levels, selectedCategories);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsPending(false);
-      form.reset();
-    }
+    await mutateAsync({
+      amount: data.amount,
+      levels: data.levels,
+      categories: selectedCategories,
+    });
+    form.reset();
   }
 
   return (
@@ -259,7 +255,13 @@ function AddNewWords() {
               form="add-new-words-form"
               disabled={isPending}
             >
-              {isPending ? <Spinner data-icon="inline-start" /> : "Add Words"}
+              {isPending ? (
+                <>
+                  <Spinner data-icon="inline-start" /> Adding words
+                </>
+              ) : (
+                "Add Words"
+              )}
             </Button>
           </Field>
         </SheetFooter>

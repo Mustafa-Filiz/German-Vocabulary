@@ -1,7 +1,7 @@
 import PageHeader from "@/components/page-header";
 import AddNewWords from "./ui/add-new-words";
 import { getCategories } from "./data/get-categories";
-import CategoryCard from "./ui/category-card";
+import CategoryCard from "./ui/learn-card";
 import Link from "next/link";
 
 async function LearnContainer() {
@@ -10,14 +10,7 @@ async function LearnContainer() {
 
   return (
     <div>
-      <PageHeader
-        title="Learn"
-        actions={
-          <Suspense fallback={<div>Loading...</div>}>
-            <AddNewWords />
-          </Suspense>
-        }
-      />
+      <PageHeader title="Learn" actions={<AddNewWords />} />
       <div className="p-4">
         <Tabs defaultValue="categories" className="gap-4">
           <TabsList className="w-full">
@@ -32,15 +25,18 @@ async function LearnContainer() {
               >
                 <CategoryCard
                   title={GERMAN_VOCAB_CATEGORIES[category.categoryTitle]}
-                  wordCount={category.wordCount}
+                  description={`${category.wordCount} words`}
                 />
               </Link>
             ))}
           </TabsContent>
-          <TabsContent value="levels" className="flex flex-col gap-4">
+          <TabsContent value="levels" className="grid grid-cols-2 gap-2">
             {levels.map((level) => (
               <Link key={level.level} href={`/learn/level/${level.level}`}>
-                <CategoryCard title={level.level} wordCount={level.wordCount} />
+                <CategoryCard
+                  title={level.level}
+                  description={`${level.wordCount} words`}
+                />
               </Link>
             ))}
           </TabsContent>
