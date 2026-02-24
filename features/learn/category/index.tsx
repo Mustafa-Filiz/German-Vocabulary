@@ -5,7 +5,7 @@ import { getWords } from "../data/get-words";
 import LearnCarousel from "../ui/learn-carousel";
 
 async function LearnCategoryContainer({ category }: { category: Category }) {
-  const words = await getWords(category);
+  const words = await getWords({ category });
 
   return (
     <>

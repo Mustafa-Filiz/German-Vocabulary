@@ -1,7 +1,7 @@
-import React from "react";
+import QuizContainer from "@/features/quiz";
 
 function QuizPage() {
-  return <div>QuizPage</div>;
+  return <QuizContainer />;
 }
 
 export default QuizPage;

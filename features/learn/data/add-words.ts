@@ -1,5 +1,6 @@
 import { typedFetch } from "@/lib/typed-fetch";
 import { wordSchema } from "@/types";
+import { useMutation } from "@tanstack/react-query";
 
 export async function addWords(
   amount: number,
@@ -16,3 +17,17 @@ export async function addWords(
 
   return response;
 }
+
+export const useAddWords = () => {
+  return useMutation({
+    mutationFn: ({
+      amount,
+      levels,
+      categories,
+    }: {
+      amount: number;
+      levels: string[];
+      categories: string[];
+    }) => addWords(amount, levels, categories),
+  });
+};

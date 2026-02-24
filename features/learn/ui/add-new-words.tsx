@@ -3,10 +3,8 @@
 
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
-import * as React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
-import { toast } from "sonner";
 import * as z from "zod";
 import {
   Field,
@@ -32,24 +30,9 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { AMOUNTS_OF_WORDS_TO_ADD } from "../constants";
-import {
-  Combobox,
-  ComboboxChip,
-  ComboboxChips,
-  ComboboxChipsInput,
-  ComboboxContent,
-  ComboboxEmpty,
-  ComboboxItem,
-  ComboboxList,
-  ComboboxValue,
-  useComboboxAnchor,
-} from "@/components/ui/combobox";
-import { addWords } from "../data/add-words";
-import {
-  GERMAN_VOCAB_CATEGORIES,
-  GERMAN_VOCAB_CATEGORIES_ARRAY,
-  LEVELS,
-} from "@/constants";
+import { useAddWords } from "../data/add-words";
+import { GERMAN_VOCAB_CATEGORIES_ARRAY, LEVELS } from "@/constants";
+import { Spinner } from "@/components/ui/spinner";
 
 const formSchema = z.object({
   amount: z
@@ -70,7 +53,7 @@ const formSchema = z.object({
 const defaultValues = {
   amount: AMOUNTS_OF_WORDS_TO_ADD[0],
   levels: [LEVELS[0]],
-  categories: [GERMAN_VOCAB_CATEGORIES_ARRAY[0]],
+  categories: GERMAN_VOCAB_CATEGORIES_ARRAY,
 };
 
 function AddNewWords() {
@@ -79,13 +62,18 @@ function AddNewWords() {
     defaultValues,
   });
 
-  const anchor = useComboboxAnchor();
+  const { mutateAsync, isPending } = useAddWords();
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
     const selectedCategories = data.categories.map(
       (category) => category.value,
     );
-    await addWords(data.amount, data.levels, selectedCategories);
+
+    await mutateAsync({
+      amount: data.amount,
+      levels: data.levels,
+      categories: selectedCategories,
+    });
     form.reset();
   }
 
@@ -202,52 +190,51 @@ function AddNewWords() {
               name="categories"
               control={form.control}
               render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <Combobox
-                    multiple
-                    autoHighlight
-                    items={GERMAN_VOCAB_CATEGORIES_ARRAY}
-                    defaultValue={field.value}
-                    onValueChange={field.onChange}
+                <FieldSet>
+                  <FieldLegend variant="label">Categories</FieldLegend>
+                  <FieldDescription>
+                    Select the categories you want to add words for.
+                  </FieldDescription>
+                  <FieldGroup
+                    data-slot="checkbox-group"
+                    className="grid grid-cols-2"
                   >
-                    <FieldLabel>Categories</FieldLabel>
-                    <FieldDescription>
-                      Select the categories you want to add words for.
-                    </FieldDescription>
-
-                    <ComboboxChips ref={anchor} className="w-full max-w-xs">
-                      <ComboboxValue>
-                        {(values) => (
-                          <React.Fragment>
-                            {values.map((value: any) => (
-                              <ComboboxChip key={value.value}>
-                                {value.label}
-                              </ComboboxChip>
-                            ))}
-                            <ComboboxChipsInput />
-                          </React.Fragment>
-                        )}
-                      </ComboboxValue>
-                    </ComboboxChips>
-                    <ComboboxContent anchor={anchor}>
-                      <ComboboxEmpty>No items found.</ComboboxEmpty>
-                      <ComboboxList>
-                        {(item) => (
-                          <ComboboxItem
-                            key={item.value}
-                            value={item}
-                            className="pointer-events-auto cursor-pointer"
-                          >
-                            {item.label}
-                          </ComboboxItem>
-                        )}
-                      </ComboboxList>
-                    </ComboboxContent>
-                  </Combobox>
+                    {GERMAN_VOCAB_CATEGORIES_ARRAY.map(({ value, label }) => (
+                      <Field
+                        key={value}
+                        orientation="horizontal"
+                        className="w-auto"
+                        data-invalid={fieldState.invalid}
+                      >
+                        <Checkbox
+                          id={`add-new-words-form-checkbox-${value}`}
+                          name={field.name}
+                          aria-invalid={fieldState.invalid}
+                          checked={field.value.some(
+                            (category) => category.value === value,
+                          )}
+                          onCheckedChange={(checked) => {
+                            const newValue = checked
+                              ? [...field.value, value]
+                              : field.value.filter(
+                                  (category) => category.value !== value,
+                                );
+                            field.onChange(newValue);
+                          }}
+                        />
+                        <FieldLabel
+                          htmlFor={`add-new-words-form-checkbox-${value}`}
+                          className="font-normal"
+                        >
+                          {label}
+                        </FieldLabel>
+                      </Field>
+                    ))}
+                  </FieldGroup>
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
                   )}
-                </Field>
+                </FieldSet>
               )}
             />
           </FieldGroup>
@@ -263,8 +250,18 @@ function AddNewWords() {
                 Close
               </Button>
             </SheetClose>
-            <Button type="submit" form="add-new-words-form">
-              Add Words
+            <Button
+              type="submit"
+              form="add-new-words-form"
+              disabled={isPending}
+            >
+              {isPending ? (
+                <>
+                  <Spinner data-icon="inline-start" /> Adding words
+                </>
+              ) : (
+                "Add Words"
+              )}
             </Button>
           </Field>
         </SheetFooter>
