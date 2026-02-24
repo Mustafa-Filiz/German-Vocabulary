@@ -62,7 +62,7 @@ export function CardCarousel({
           {current} / {count}
         </span>
       </div>
-      {current === count && (
+      {current === count && onComplete && (
         <Button className="mt-4 w-full" onClick={handleComplete}>
           Next Practice Session
         </Button>

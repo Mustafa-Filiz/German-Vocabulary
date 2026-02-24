@@ -39,11 +39,9 @@ function WordCard({ word }: Props) {
       </CardHeader>
       <CardContent>
         <p className="font-medium">{word.definitionEng}</p>
-        <p className="text-sm text-muted-foreground mt-1">
-          {word.definitionTr}
-        </p>
+        <p className="text-muted-foreground mt-1">{word.definitionTr}</p>
         {word.exampleSentence ? (
-          <blockquote className="mt-3 text-sm italic text-muted-foreground">{`"${word.exampleSentence}"`}</blockquote>
+          <blockquote className="mt-3 italic text-muted-foreground">{`"${word.exampleSentence}"`}</blockquote>
         ) : null}
       </CardContent>
       {/* <CardFooter className="justify-between">
