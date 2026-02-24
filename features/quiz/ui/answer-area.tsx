@@ -11,8 +11,9 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Word } from "@/types";
 import { revalidateCache } from "@/utils/revalidate-cache";
+import { shuffleArray } from "@/utils/shuffle-array";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 interface AnswerAreaProps {
   question: Word;
@@ -22,6 +23,11 @@ interface AnswerAreaProps {
 function AnswerArea({ question, options }: AnswerAreaProps) {
   const [answer, setAnswer] = useState("");
   const [status, setStatus] = useState<"idle" | "correct" | "wrong">("idle");
+
+  const shuffledOptions = useMemo(() => {
+    const newArr = shuffleArray(options);
+    return newArr;
+  }, [options]);
 
   function handleChange(value: string) {
     setStatus("idle");
@@ -44,7 +50,7 @@ function AnswerArea({ question, options }: AnswerAreaProps) {
   return (
     <div className="flex flex-col gap-2 mt-8">
       <RadioGroup onValueChange={handleChange}>
-        {options.map((option) => (
+        {shuffledOptions.map((option) => (
           <FieldLabel key={option.id} htmlFor={option.id}>
             <Field orientation="horizontal" aria-invalid={status === "wrong"}>
               <FieldContent>
