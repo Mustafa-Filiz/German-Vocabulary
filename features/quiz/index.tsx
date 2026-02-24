@@ -1,7 +1,6 @@
 import PageHeader from "@/components/page-header";
 import QuestionCard from "./ui/question-card";
 import AnswerArea from "./ui/answer-area";
-import { shuffleArray } from "@/utils/shuffle-array";
 import { getRandomWords } from "../shared/data/get-random-words";
 
 async function QuizContainer() {
@@ -15,7 +14,7 @@ async function QuizContainer() {
       <PageHeader title="Quiz" />
       <div className="p-4">
         <QuestionCard term={question.term} article={question.article} />
-        <AnswerArea question={question} options={shuffleArray(options)} />
+        <AnswerArea question={question} options={options} />
       </div>
     </>
   );
